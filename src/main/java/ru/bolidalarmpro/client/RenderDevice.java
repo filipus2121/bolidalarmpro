@@ -83,7 +83,8 @@ public final class RenderDevice extends TileEntitySpecialRenderer {
         GL11.glEnable(GL11.GL_TEXTURE_2D);
 
         if (kind.isPanel()) {
-            FontRenderer font = Minecraft.getMinecraft().fontRendererObj;
+            // MCP 1.7.10: Minecraft.fontRenderer; GuiScreen.fontRendererObj is a different field.
+            FontRenderer font = Minecraft.getMinecraft().fontRenderer;
             if (font != null) drawLcdText(font, x1, y2, z2, d.clientLcd0, d.clientLcd1);
         }
 

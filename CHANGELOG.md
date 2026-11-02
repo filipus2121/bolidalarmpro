@@ -23,3 +23,13 @@
 Реализованы детерминированная электротехника, RS-485, кольцевая ДПЛС,
 состояния С2000-АСПТ, контроль линий, журнал событий, 3D-панели приборов,
 ЖКИ в мире, GUI конфигуратора и порошковое тушение огня в радиусе.
+
+### Исправления совместимости с Forge 1.7.10
+
+* `NetworkRegistry.INSTANCE.newSimpleChannel(...)`: в FML 1.7.10 это точное имя
+  метода; `newSimpleNetworkWrapper(...)` в API отсутствует.
+* `RenderDevice` использует `Minecraft.fontRenderer`; `fontRendererObj` — поле
+  `GuiScreen`, а не `Minecraft`.
+* `DeviceBlock` реализует обязательный `ITileEntityProvider.createNewTileEntity(World,int)`
+  и сохраняет Forge-хук `createTileEntity(World,int)` согласованным с ним.
+* Сигнатуры сверены непосредственно с `forgeSrc-1.7.10-10.13.4.1614-1.7.10.jar`.

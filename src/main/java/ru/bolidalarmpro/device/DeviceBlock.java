@@ -86,11 +86,18 @@ public final class DeviceBlock extends Block implements ITileEntityProvider {
         return true;
     }
 
+    /** Required by ITileEntityProvider in MCP 1.7.10. */
     @Override
-    public TileEntity createTileEntity(World world, int meta) {
+    public TileEntity createNewTileEntity(World world, int meta) {
         DeviceTileEntity te = new DeviceTileEntity();
         te.setKindFromMetadata(meta);
         return te;
+    }
+
+    /** Forge's metadata-aware hook; keep it consistent with the interface method. */
+    @Override
+    public TileEntity createTileEntity(World world, int meta) {
+        return createNewTileEntity(world, meta);
     }
 
     @Override

@@ -34,7 +34,9 @@ public final class ModPackets {
     private ModPackets() {}
 
     public static void register() {
-        INSTANCE = NetworkRegistry.INSTANCE.newSimpleNetworkWrapper(ModInfo.MODID);
+        // FML 1.7.10: NetworkRegistry is an enum singleton and exposes newSimpleChannel,
+        // not the newSimpleNetworkWrapper name used by some later tutorials.
+        INSTANCE = NetworkRegistry.INSTANCE.newSimpleChannel(ModInfo.MODID);
         INSTANCE.registerMessage(DeviceActionMessage.Handler.class, DeviceActionMessage.class, 0, Side.SERVER);
         INSTANCE.registerMessage(PowderEffectMessage.Handler.class, PowderEffectMessage.class, 1, Side.CLIENT);
     }
