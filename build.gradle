@@ -1,0 +1,60 @@
+buildscript {
+    repositories {
+        mavenCentral()
+        maven { url "http://files.minecraftforge.net/maven" }
+        maven { url "https://libraries.minecraft.net/" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+apply plugin: 'java'
+
+version = "0.1.0"
+group = "ru.bolidalarmpro"
+archivesBaseName = "BolidAlarmPro-1.7.10"
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+compileJava.options.encoding = "UTF-8"
+compileTestJava.options.encoding = "UTF-8"
+
+minecraft {
+    version = "1.7.10-10.13.4.1614-1.7.10"
+    runDir = "run"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "http://files.minecraftforge.net/maven" }
+    maven { url "https://libraries.minecraft.net/" }
+}
+
+processResources {
+    inputs.property "version", project.version
+    inputs.property "mcversion", project.minecraft.version
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+    }
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+task simTest(type: JavaExec, dependsOn: classes) {
+    description = "Runs the pure-Java electrical simulator self-test"
+    main = "ru.bolidalarmpro.sim.SimSelfTest"
+    classpath = sourceSets.main.runtimeClasspath
+}
+
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = "sources"
+    from sourceSets.main.allSource
+}
+
+artifacts {
+    archives sourcesJar
+}
